@@ -1,9 +1,7 @@
 package com.example.springboot.models;
 
 import com.example.springboot.enums.UserRole;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,11 +14,19 @@ import java.util.List;
 @Table(name = "tb_users")
 
 public class UserModel implements UserDetails {
-    @Id private String id;
+    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String login;
     private String password;
 
     private UserRole role;
+
+    public UserModel(String login, String password, UserRole role) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
+
 
 
     public String getId() {
